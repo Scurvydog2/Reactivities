@@ -1,0 +1,13 @@
+C:\.Net Programs\MyFirstWebsite\Reactivities\Application\bin\Debug\netstandard2.1\Application.deps.json
+C:\.Net Programs\MyFirstWebsite\Reactivities\Application\bin\Debug\netstandard2.1\Application.dll
+C:\.Net Programs\MyFirstWebsite\Reactivities\Application\bin\Debug\netstandard2.1\Application.pdb
+C:\.Net Programs\MyFirstWebsite\Reactivities\Application\bin\Debug\netstandard2.1\Domain.dll
+C:\.Net Programs\MyFirstWebsite\Reactivities\Application\bin\Debug\netstandard2.1\Persistence.dll
+C:\.Net Programs\MyFirstWebsite\Reactivities\Application\bin\Debug\netstandard2.1\Domain.pdb
+C:\.Net Programs\MyFirstWebsite\Reactivities\Application\bin\Debug\netstandard2.1\Persistence.pdb
+C:\.Net Programs\MyFirstWebsite\Reactivities\Application\obj\Debug\netstandard2.1\Application.csprojAssemblyReference.cache
+C:\.Net Programs\MyFirstWebsite\Reactivities\Application\obj\Debug\netstandard2.1\Application.AssemblyInfoInputs.cache
+C:\.Net Programs\MyFirstWebsite\Reactivities\Application\obj\Debug\netstandard2.1\Application.AssemblyInfo.cs
+C:\.Net Programs\MyFirstWebsite\Reactivities\Application\obj\Debug\netstandard2.1\Application.csproj.CopyComplete
+C:\.Net Programs\MyFirstWebsite\Reactivities\Application\obj\Debug\netstandard2.1\Application.dll
+C:\.Net Programs\MyFirstWebsite\Reactivities\Application\obj\Debug\netstandard2.1\Application.pdb

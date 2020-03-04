@@ -1,0 +1,8 @@
+C:\.Net Programs\MyFirstWebsite\Reactivities\Domain\bin\Debug\netstandard2.1\Domain.deps.json
+C:\.Net Programs\MyFirstWebsite\Reactivities\Domain\bin\Debug\netstandard2.1\Domain.dll
+C:\.Net Programs\MyFirstWebsite\Reactivities\Domain\bin\Debug\netstandard2.1\Domain.pdb
+C:\.Net Programs\MyFirstWebsite\Reactivities\Domain\obj\Debug\netstandard2.1\Domain.csprojAssemblyReference.cache
+C:\.Net Programs\MyFirstWebsite\Reactivities\Domain\obj\Debug\netstandard2.1\Domain.AssemblyInfoInputs.cache
+C:\.Net Programs\MyFirstWebsite\Reactivities\Domain\obj\Debug\netstandard2.1\Domain.AssemblyInfo.cs
+C:\.Net Programs\MyFirstWebsite\Reactivities\Domain\obj\Debug\netstandard2.1\Domain.dll
+C:\.Net Programs\MyFirstWebsite\Reactivities\Domain\obj\Debug\netstandard2.1\Domain.pdb

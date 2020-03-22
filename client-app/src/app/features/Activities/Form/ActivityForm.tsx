@@ -1,48 +1,61 @@
-import React, { useState, ChangeEvent, FormEvent } from "react";
-import { Item, Button, Label, Segment, Form } from "semantic-ui-react";
+import React, { useState, FormEvent, useContext, useEffect } from "react";
+import { Button, Segment, Form } from "semantic-ui-react";
 import { IActivity } from "../../../models/activity";
-import { checkServerIdentity } from "tls";
+
 import { v4 as uuid } from "uuid";
-interface IProps {
-  setEditMode: (editMode: boolean) => void;
-  activity: IActivity;
-  createActivity: (activity: IActivity) => void;
-  editActivity: (activity: IActivity) => void;
-  submitting:boolean;
+import ActivityStore from "../../../stores/activityStore";
+import { observer } from "mobx-react-lite";
+import { RouteComponentProps } from "react-router-dom";
+
+interface DetailParams {
+  id: string;
 }
 
-export const ActivityForm: React.FC<IProps> = ({
-  setEditMode,
-  activity: initialFormState,
-  createActivity,
-  editActivity,
-  submitting
+export const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
+  match,
+  location,
+  history
 }) => {
-  const initializeForm = () => {
-    if (initialFormState) {
-      return initialFormState;
-    } else {
-      return {
-        id: "",
-        title: "",
-        category: "",
-        description: "",
-        date: "",
-        city: "",
-        venue: ""
-      };
+  const activityStore = useContext(ActivityStore);
+  const {
+    createActivity,
+    editActivity,
+    submitting,
+    loadActivity,
+    clearActivity,
+    activity: initialFormState
+  } = activityStore;
+ 
+
+  const [activity, setActivity] = useState<IActivity>({
+    id: "",
+    title: "",
+    category: "",
+    description: "",
+    date: "",
+    city: "",
+    venue: ""
+  });
+  useEffect(() => {
+    if (activity.id.length===0 && match.params.id) {
+      loadActivity(match.params.id).then(
+        () => initialFormState && setActivity(initialFormState)
+      );
     }
-  };
-  const [activity, setActivity] = useState<IActivity>(initializeForm());
+    return () => {
+     clearActivity();
+    }
+    
+  }, [loadActivity,clearActivity,match.params.id,initialFormState,activity.id.length]);
   const handleSubmit = () => {
     if (activity.id.length === 0) {
       let newActivity = {
         ...activity,
         id: uuid()
       };
-      createActivity(newActivity);
+      createActivity(newActivity).then(()=>history.push(`/activities/${newActivity.id}`));
     } else {
-      editActivity(activity);
+      editActivity(activity).then(()=>history.push(`/activities/${activity.id}`));
     }
   };
   const handleInputChange = (
@@ -104,10 +117,10 @@ export const ActivityForm: React.FC<IProps> = ({
           floated="right"
           type="button"
           content="Cancel"
-          onClick={() => setEditMode(false)}
+          onClick={() => history.push('/activities')}
         />
       </Form>
     </Segment>
   );
 };
-export default ActivityForm;
+export default observer(ActivityForm);

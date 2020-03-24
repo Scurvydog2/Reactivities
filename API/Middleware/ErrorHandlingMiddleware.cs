@@ -37,12 +37,12 @@ namespace API.Middleware
             switch (ex)
             {
                 case RestException re:
-                    logger.LogError(ex, "Rest ERROR");
+                    logger.LogError(ex, "REST ERROR");
                     errors = re.Errors;
                     context.Response.StatusCode = (int)re.Code;
                     break;
                 case Exception e:
-                    logger.LogError(ex, "Server ERROR");
+                    logger.LogError(ex, "SERVER ERROR");
                     errors = string.IsNullOrWhiteSpace(e.Message) ? "Error" : e.Message;
                     context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                     break;

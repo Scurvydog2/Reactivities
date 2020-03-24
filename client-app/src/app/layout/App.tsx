@@ -12,11 +12,13 @@ import {
 import HomePage from "../features/home/HomePage";
 import { ActivityForm } from "../features/Activities/Form/ActivityForm";
 import ActivityDetails from "../features/Activities/Details/ActivityDetails";
+import {ToastContainer} from 'react-toastify';
 import NotFound from "../layout/NotFound";
 
 const App: React.FC<RouteComponentProps> = ({ location }) => {
   return (
     <Fragment>
+      <ToastContainer position='bottom-right'/>
       <Route exact path="/" component={HomePage} />
       <Route
         path={"/(.+)"}

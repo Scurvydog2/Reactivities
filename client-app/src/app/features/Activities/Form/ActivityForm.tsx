@@ -2,8 +2,9 @@ import React, { useState, FormEvent, useContext, useEffect } from "react";
 import { Button, Segment, Form, Grid, GridColumn } from "semantic-ui-react";
 import { IActivity } from "../../../models/activity";
 import TextInput from '../../../common/Form/TextInput';
-
+import SelectInput from '../../../common/Form/SelectInput';
 import TextAreaInput from '../../../common/Form/TextAreaInput';
+import {category} from '../../../common/Options/categoryOptions';
 import { v4 as uuid } from "uuid";
 import ActivityStore from "../../../stores/activityStore";
 import { observer } from "mobx-react-lite";
@@ -91,7 +92,8 @@ export const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
           />
           <Field
             name="category"
-            component={TextInput}
+            options={category}
+            component={SelectInput}
             placeholder="Category"
             value={activity.category}
           />

@@ -1,7 +1,9 @@
 import React, { useState, FormEvent, useContext, useEffect } from "react";
 import { Button, Segment, Form, Grid, GridColumn } from "semantic-ui-react";
 import { IActivity } from "../../../models/activity";
-import TextInput from '../../../common/Form/TextInput'
+import TextInput from '../../../common/Form/TextInput';
+
+import TextAreaInput from '../../../common/Form/TextAreaInput';
 import { v4 as uuid } from "uuid";
 import ActivityStore from "../../../stores/activityStore";
 import { observer } from "mobx-react-lite";
@@ -81,7 +83,8 @@ export const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
             component={TextInput}
           />
           <Field
-            component={TextInput}
+            component={TextAreaInput}
+            rows={3}
             name="description"
             placeholder="Description"
             value={activity.description}

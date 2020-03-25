@@ -1,7 +1,7 @@
 import React, { useState, FormEvent, useContext, useEffect } from "react";
 import { Button, Segment, Form, Grid, GridColumn } from "semantic-ui-react";
 import { IActivity } from "../../../models/activity";
-
+import TextInput from '../../../common/Form/TextInput'
 import { v4 as uuid } from "uuid";
 import ActivityStore from "../../../stores/activityStore";
 import { observer } from "mobx-react-lite";
@@ -80,10 +80,10 @@ export const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
         render= {({handleSubmit})=>(
           <Form onSubmit={handleSubmit}>
           <Field
-            component='input'
             name="title"
             placeholder="Title"
             value={activity.title}
+            component={TextInput}
           />
           <Form.TextArea
             rows={2}
@@ -92,26 +92,26 @@ export const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
             placeholder="Description"
             value={activity.description}
           />
-          <Field
+          <Form.Input
             name="category"
             onChange={handleInputChange}
             placeholder="Category"
             value={activity.category}
           />
-          <Field
+          <Form.Input
             type="datetime-local"
             onChange={handleInputChange}
             name="date"
             placeholder="Date"
             value={activity.date}
           />
-          <Field
+          <Form.Input
             name="city"
             onChange={handleInputChange}
             placeholder="City"
             value={activity.city}
           />
-          <Field
+          <Form.Input
             name="venue"
             onChange={handleInputChange}
             placeholder="Venue"

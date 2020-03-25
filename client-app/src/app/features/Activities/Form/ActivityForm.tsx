@@ -6,6 +6,9 @@ import { v4 as uuid } from "uuid";
 import ActivityStore from "../../../stores/activityStore";
 import { observer } from "mobx-react-lite";
 import { RouteComponentProps } from "react-router-dom";
+import {Form as FinalForm, Field} from 'react-final-form'
+import { values } from "mobx";
+
 
 interface DetailParams {
   id: string;
@@ -47,6 +50,7 @@ export const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
     }
     
   }, [loadActivity,clearActivity,match.params.id,initialFormState,activity.id.length]);
+  
   const handleSubmit = () => {
     if (activity.id.length === 0) {
       let newActivity = {
@@ -64,64 +68,72 @@ export const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
     const { name, value } = event.currentTarget;
     setActivity({ ...activity, [name]: value });
   };
+  const handleFinalFormSubmit=(values:any)=>{
+    console.log(values);
+  }
   return (
     <Grid>
       <GridColumn width={10}>
       <Segment clearing>
-      <Form onSubmit={handleSubmit}>
-        <Form.Input
-          onChange={handleInputChange}
-          name="title"
-          placeholder="Title"
-          value={activity.title}
-        />
-        <Form.TextArea
-          rows={2}
-          onChange={handleInputChange}
-          name="description"
-          placeholder="Description"
-          value={activity.description}
-        />
-        <Form.Input
-          name="category"
-          onChange={handleInputChange}
-          placeholder="Category"
-          value={activity.category}
-        />
-        <Form.Input
-          type="datetime-local"
-          onChange={handleInputChange}
-          name="date"
-          placeholder="Date"
-          value={activity.date}
-        />
-        <Form.Input
-          name="city"
-          onChange={handleInputChange}
-          placeholder="City"
-          value={activity.city}
-        />
-        <Form.Input
-          name="venue"
-          onChange={handleInputChange}
-          placeholder="Venue"
-          value={activity.venue}
-        />
-        <Button
-          floated="right"
-          onChange={handleInputChange}
-          positive
-          type="submit"
-          content="Submit"
-          loading={submitting}
-        />
-        <Button
-          floated="right"
-          type="button"
-          content="Cancel"
-          onClick={() => history.push('/activities')}
-        />
-      </Form>
+        <FinalForm
+        onSubmit={handleFinalFormSubmit}
+        render= {({handleSubmit})=>(
+          <Form onSubmit={handleSubmit}>
+          <Field
+            component='input'
+            name="title"
+            placeholder="Title"
+            value={activity.title}
+          />
+          <Form.TextArea
+            rows={2}
+            onChange={handleInputChange}
+            name="description"
+            placeholder="Description"
+            value={activity.description}
+          />
+          <Field
+            name="category"
+            onChange={handleInputChange}
+            placeholder="Category"
+            value={activity.category}
+          />
+          <Field
+            type="datetime-local"
+            onChange={handleInputChange}
+            name="date"
+            placeholder="Date"
+            value={activity.date}
+          />
+          <Field
+            name="city"
+            onChange={handleInputChange}
+            placeholder="City"
+            value={activity.city}
+          />
+          <Field
+            name="venue"
+            onChange={handleInputChange}
+            placeholder="Venue"
+            value={activity.venue}
+          />
+          <Button
+            floated="right"
+            onChange={handleInputChange}
+            positive
+            type="submit"
+            content="Submit"
+            loading={submitting}
+          />
+          <Button
+            floated="right"
+            type="button"
+            content="Cancel"
+            onClick={() => history.push('/activities')}
+          />
+        </Form>
+        )} />>
+     
     </Segment>
       </GridColumn>
     </Grid>

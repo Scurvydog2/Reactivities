@@ -51,23 +51,18 @@ export const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
     
   }, [loadActivity,clearActivity,match.params.id,initialFormState,activity.id.length]);
   
-  const handleSubmit = () => {
-    if (activity.id.length === 0) {
-      let newActivity = {
-        ...activity,
-        id: uuid()
-      };
-      createActivity(newActivity).then(()=>history.push(`/activities/${newActivity.id}`));
-    } else {
-      editActivity(activity).then(()=>history.push(`/activities/${activity.id}`));
-    }
-  };
-  const handleInputChange = (
-    event: FormEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = event.currentTarget;
-    setActivity({ ...activity, [name]: value });
-  };
+  // const handleSubmit = () => {
+  //   if (activity.id.length === 0) {
+  //     let newActivity = {
+  //       ...activity,
+  //       id: uuid()
+  //     };
+  //     createActivity(newActivity).then(()=>history.push(`/activities/${newActivity.id}`));
+  //   } else {
+  //     editActivity(activity).then(()=>history.push(`/activities/${activity.id}`));
+  //   }
+  // };
+ 
   const handleFinalFormSubmit=(values:any)=>{
     console.log(values);
   }
@@ -85,41 +80,38 @@ export const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
             value={activity.title}
             component={TextInput}
           />
-          <Form.TextArea
-            rows={2}
-            onChange={handleInputChange}
+          <Field
+            component={TextInput}
             name="description"
             placeholder="Description"
             value={activity.description}
           />
-          <Form.Input
+          <Field
             name="category"
-            onChange={handleInputChange}
+            component={TextInput}
             placeholder="Category"
             value={activity.category}
           />
-          <Form.Input
-            type="datetime-local"
-            onChange={handleInputChange}
+          <Field
+            component={TextInput}
             name="date"
             placeholder="Date"
             value={activity.date}
           />
-          <Form.Input
+          <Field
             name="city"
-            onChange={handleInputChange}
+            component={TextInput}
             placeholder="City"
             value={activity.city}
           />
-          <Form.Input
+          <Field
             name="venue"
-            onChange={handleInputChange}
+            component={TextInput}
             placeholder="Venue"
             value={activity.venue}
           />
           <Button
             floated="right"
-            onChange={handleInputChange}
             positive
             type="submit"
             content="Submit"
@@ -132,7 +124,7 @@ export const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
             onClick={() => history.push('/activities')}
           />
         </Form>
-        )} />>
+        )} />
      
     </Segment>
       </GridColumn>

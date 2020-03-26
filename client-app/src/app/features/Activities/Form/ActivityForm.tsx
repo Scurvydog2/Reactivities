@@ -10,7 +10,7 @@ import ActivityStore from "../../../stores/activityStore";
 import { observer } from "mobx-react-lite";
 import { RouteComponentProps } from "react-router-dom";
 import {Form as FinalForm, Field} from 'react-final-form'
-
+import {combineDateAndTime} from '../../../common/util/util'
 
 
 interface DetailParams {
@@ -68,8 +68,14 @@ export const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
   // };
  
   const handleFinalFormSubmit=(values:any)=>{
-    console.log(values);
+    const dateAndTime=combineDateAndTime(values.date,values.time);
+    const {date,time,...activity}=values;
+    activity.date=dateAndTime;
+    console.log(activity);
   }
+
+
+
   return (
     <Grid>
       <GridColumn width={10}>

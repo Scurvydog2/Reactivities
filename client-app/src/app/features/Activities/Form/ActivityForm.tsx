@@ -1,6 +1,6 @@
 import React, { useState,  useContext, useEffect } from "react";
 import { Button, Segment, Form, Grid, GridColumn } from "semantic-ui-react";
-import { IActivity } from "../../../models/activity";
+import { IActivityFormValues } from "../../../models/activity";
 import TextInput from '../../../common/Form/TextInput';
 import SelectInput from '../../../common/Form/SelectInput';
 import TextAreaInput from '../../../common/Form/TextAreaInput';
@@ -33,17 +33,18 @@ export const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
   } = activityStore;
  
 
-  const [activity, setActivity] = useState<IActivity>({
-    id: "",
+  const [activity, setActivity] = useState<IActivityFormValues>({
+    id: undefined,
     title: "",
     category: "",
     description: "",
-    date: null,
+    date: undefined,
+    time: undefined,
     city: "",
     venue: ""
   });
   useEffect(() => {
-    if (activity.id.length===0 && match.params.id) {
+    if (activity.id && match.params.id) {
       loadActivity(match.params.id).then(
         () => initialFormState && setActivity(initialFormState)
       );
@@ -52,7 +53,7 @@ export const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
      clearActivity();
     }
     
-  }, [loadActivity,clearActivity,match.params.id,initialFormState,activity.id.length]);
+  }, [loadActivity,clearActivity,match.params.id,initialFormState,activity.id]);
   
   // const handleSubmit = () => {
   //   if (activity.id.length === 0) {
@@ -97,12 +98,23 @@ export const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
             placeholder="Category"
             value={activity.category}
           />
+          <Form.Group widths='equal'>
           <Field
             component={DateInput}
-            name="date"
+            name="Date"
+            date={true}
             placeholder="Date"
-            value={activity.date!}
+            value={activity.date}
           />
+          <Field
+            component={DateInput}
+            name="Time"
+            time={true}
+            placeholder="Time"
+            value={activity.time}
+          />
+          </Form.Group>
+          
           <Field
             name="city"
             component={TextInput}

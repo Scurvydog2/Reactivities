@@ -3,6 +3,7 @@ import { createContext, SyntheticEvent } from "react";
 import { IActivity } from "../models/activity";
 import agent from "../api/Agent";
 import { ADDRGETNETWORKPARAMS } from "dns";
+import { history } from "../..";
 
 configure({ enforceActions: "always" });
 
@@ -63,6 +64,7 @@ class ActivityStore {
         runInAction('getting activity',()=>{
           activity.date=new Date(activity.date);
           this.activity=activity;
+          this.activityRegistry.set(activity.id, activity);
           this.loadingInitial=false;
         })
         return activity;
@@ -79,17 +81,21 @@ class ActivityStore {
     this.submitting = true;
     try {
       await agent.Activities.create(activity);
+      
       runInAction("create activity", () => {
         this.activityRegistry.set(activity.id, activity);
         this.submitting = false;
       });
+      history.push(`/activities/${activity.id}`)
     } catch (error) {
-      console.log(error);
+     
       runInAction("create activity error", () => {
         this.submitting = false;
-      });
+      }); console.log(error);
     }
   };
+
+
   @action editActivity = async (activity: IActivity) => {
     this.submitting = true;
     try {
@@ -99,6 +105,7 @@ class ActivityStore {
         this.activity = activity;
 
       });
+      history.push(`/activities/${activity.id}`)
     } catch (error) {
       console.log(error);
       runInAction("edit activity error", () => {

@@ -14,7 +14,28 @@ import { observer } from "mobx-react-lite";
 import { RouteComponentProps } from "react-router-dom";
 import { Form as FinalForm, Field } from "react-final-form";
 import { combineDateAndTime } from "../../../common/util/util";
-import { v4 as uuid } from 'uuid';
+import { v4 as uuid } from "uuid";
+import {
+  combineValidators,
+  isRequired,
+  composeValidators,
+  hasLengthGreaterThan,
+} from "revalidate";
+
+const validate = combineValidators({
+  title: isRequired({ message: "The event title is required" }),
+  category: isRequired({ message: "The category is required" }),
+  description: composeValidators(
+    isRequired("Description"),
+    hasLengthGreaterThan(4)({
+      message: "Description needs to be at least 4 characters",
+    })
+  )(),
+  city: isRequired("City"),
+  venue: isRequired("Venue"),
+  date: isRequired("Date"),
+  time: isRequired("Time"),
+});
 
 interface DetailParams {
   id: string;
@@ -32,7 +53,7 @@ export const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
     clearActivity,
     activity: initialFormState,
     createActivity,
-    editActivity
+    editActivity,
   } = activityStore;
 
   const [activity, setActivity] = useState(new ActivityFormValues());
@@ -46,8 +67,6 @@ export const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
     }
   }, [loadActivity, match.params.id]);
 
-  
-
   const handleFinalFormSubmit = (values: any) => {
     const dateAndTime = combineDateAndTime(values.date, values.time);
     const { date, time, ...activity } = values;
@@ -55,11 +74,11 @@ export const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
     if (!activity.id) {
       let newActivity = {
         ...activity,
-        id: uuid()
+        id: uuid(),
       };
-      createActivity(newActivity)
+      createActivity(newActivity);
     } else {
-      editActivity(activity)
+      editActivity(activity);
     }
   };
 
@@ -68,9 +87,10 @@ export const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
       <GridColumn width={10}>
         <Segment clearing>
           <FinalForm
+            validate={validate}
             initialValues={activity}
             onSubmit={handleFinalFormSubmit}
-            render={({ handleSubmit }) => (
+            render={({ handleSubmit, invalid, pristine }) => (
               <Form onSubmit={handleSubmit} loading={loading}>
                 <Field
                   name="title"
@@ -123,7 +143,7 @@ export const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
                 />
                 <Button
                   floated="right"
-                  disabled={loading}
+                  disabled={loading || invalid || pristine}
                   positive
                   type="submit"
                   content="Submit"
@@ -134,7 +154,11 @@ export const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
                   disabled={loading}
                   type="button"
                   content="Cancel"
-                  onClick={activity.id ? () => history.push(`/activities/${activity.id}`):() => history.push("/activities")}
+                  onClick={
+                    activity.id
+                      ? () => history.push(`/activities/${activity.id}`)
+                      : () => history.push("/activities")
+                  }
                 />
               </Form>
             )}
